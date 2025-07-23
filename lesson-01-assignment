@@ -1,0 +1,31 @@
+# Commands used:
+course = Course.find(5)
+course.coding_class.title
+course.trimester.term
+course.trimester.year
+
+enrollments = Enrollment.where(course_id: 5)
+enrollments.each do |enrollment|
+student = Student.find(enrollment.student_id)
+puts "#{student.id}, #{student.email}"
+end
+
+# Matching student number 1:
+Student ID: 41  
+Student Email: brendon.mueller@feeney.example  
+Course Title: Intro to Programming  
+Trimester Term: Spring  
+Trimester Year: 2025  
+
+
+ enrollments.each do |enrollment|
+ student = Student.find(44)
+ puts "#{student.id}, #{student.email}"
+ end
+
+# Matching student number 2:
+Student ID: 44
+Student Email: santa.sporer@tillman-hane.example
+Course Title: Intro to Programming
+Trimester Term: Spring
+Trimester Year: 2025
