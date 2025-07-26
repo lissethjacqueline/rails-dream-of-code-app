@@ -1,0 +1,90 @@
+##Question 1: Creating course records Spring 2026
+
+##Creating the Spring 2026 trimester
+Trimester.create(year: '2026', term: 'Spring', application_deadline: '2026-02-15', start_date: "2026-03-01", end_date: "2026-06-30")
+
+#Assigning a variable 
+ spring_2026 = Trimester.find_by(year: '2026', term: 'Spring')
+
+#Looping 
+CodingClass.all
+  CodingClass.all.each do |coding_class|
+  Course.create(coding_class_id: coding_class.id,trimester_id: spring_2026.id)
+end
+
+##Question 2: Creating students enrollment
+
+#Creating a student variable
+student = Student.create(first_name: 'Test', last_name: 'Student', email: 'test.student@example.com')
+#calling to Find course intro 
+intro_course = Course.joins(:coding_class, :trimester).where(coding_classes: { title: 'Intro to Programming' }, trimesters: { year: '2026', term: 'Spring'}). first
+
+#Enrolling the student in that course // ran into errors 
+enrollment = Enrollment.create(student_id: student.id, course_id: intro_course.id)
+
+# Finding a mentor
+mentor = Mentor.all.detect { |m| m.enrollments.count <= 2 }
+
+# Assign the mentor to the enrollment
+MentorEnrollmentAssignment.create(mentor_id: mentor.id, enrollment_id: enrollment.id)
+
+##Question 3:
+My project is called **FarmHelper**, a web application for small farmers.
+
+## Users:
+ **Farmers** // (main users)
+ **Agronomists**// (provide feedback)
+
+## Features:
+- A farmer can upload photos of crops and tag symptoms
+- A farmer can log tasks like watering, fertilization, and pest treatments
+- An agronomist can view and comment on farmer activity logs
+- A farmer can receive weekly tips based on crop data
+
+
+##Question 4: Designing the Model 
+# Tables and Attributes
+
+
+ **Users**
+  - id
+  - first_name
+  - last_name
+  - email
+  - role (farmer or agronomist)
+
+ **Crops**
+  - id
+  - user_id
+  - crop_type
+  - planting_date
+  - notes
+
+**Photos**
+  - id
+  - crop_id
+  - image_url
+  - description
+  - tags
+
+ **Tasks**
+  - id
+  - crop_id
+  - task_type (watering, fertilizing, etc.)
+  - date
+  - notes
+
+ **Comments**
+  - id
+  - user_id (agronomist)
+  - photo_id or task_id
+  - content
+  - created_at
+
+# Relationships:
+- A User has many Crops
+- A Crop has many Photos and Tasks
+- A Photo or Task has many Comments (polymorphic)
+- A Comment belongs to a User
+
+"""
