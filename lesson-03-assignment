@@ -1,0 +1,38 @@
+### Q1-What tables do you need to add? Decide on table names and their associations to each other and any existing tables/models.
+**Topics**
+- has_many :Lesson_topics
+- has_many :Lessons, through: :Lesson_topics
+**lesson_topics**
+- belongs_to :lesson
+- belongs_to :topic
+**Lessons**
+- has_many :Lesson_topics
+- has_many :topics, through: :lesson_topics
+
+### Q2-What columns are necessary for the associations you decided on?
+- "lesson_topics" needs: "lesson_id", "topic_id"  
+- "topics" needs: "id", "title"
+
+### Q3-What other columns (if any) need to be included on the tables? What other data needs to be stored?
+- "topics": add "created_at" and "updated_at" (timestamps).  
+- "lesson_topics": add "created_at" and "updated_at" (timestamps).  
+- Add indexes  
+
+### Q4-Write out each table's name and column names with data types.
+**topics**  
+  - id: integer (PK)  
+  - title: string, null: false, unique  
+  - created_at: datetime  
+  - updated_at: datetime  
+
+**lesson_topics**  
+  - id: integer (PK)  
+  - lesson_id: integer, null: false, FK → lessons.id  
+  - topic_id: integer, null: false, FK → topics.id  
+  - created_at: datetime  
+  - updated_at: datetime 
+
+### Q5-Determine the generator command you'll need to create the migration file and run the command to generate
+### the empty migration file. Start with just the topics migration. (Hint: your filename should be create_topics)
+- To create the "Topic" migration :
+    bin/rails generate migration (places the name_of_the_topics here w/o the "()")
